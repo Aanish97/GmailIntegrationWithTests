@@ -1,15 +1,13 @@
+import httpx
 import os.path
 import asyncio
 from datetime import datetime
 from typing import Dict, List, Any
-import json
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-import httpx
 
 SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"]
 CREDENTIALS_FILE = "credentials.json"
@@ -181,13 +179,13 @@ def format_output(data: Dict[str, Any]) -> str:
     for i, email in enumerate(data["emails"], 1):
         output.append(f"\n📧 EMAIL #{i}")
         output.append("-" * 40)
-        output.append(f"Message ID: {email['messageId']}")
-        output.append(f"Thread ID: {email['threadId']}")
-        output.append(f"Timestamp: {email['messageTimestamp']}")
-        output.append(f"From: {email['sender']}")
-        output.append(f"Subject: {email['subject']}")
-        output.append(f"Labels: {', '.join(email['labelIds']) if email['labelIds'] else 'None'}")
-        output.append(f"Preview: {email['messageText'][:100]}{'...' if len(email['messageText']) > 100 else ''}")
+        output.append(f"messageId: {email['messageId']}")
+        output.append(f"threadId: {email['threadId']}")
+        output.append(f"messageTimestamp: {email['messageTimestamp']}")
+        output.append(f"sender: {email['sender']}")
+        output.append(f"subject: {email['subject']}")
+        output.append(f"labelIds: {', '.join(email['labelIds']) if email['labelIds'] else 'None'}")
+        output.append(f"messageText: {email['messageText'][:100]}{'...' if len(email['messageText']) > 100 else ''}")
         output.append("")
     
     return "\n".join(output)
